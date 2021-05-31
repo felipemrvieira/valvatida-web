@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 // import api from '../services/api';
-// import User from './images/user-icon.png';
+import User from './images/user-icon.png';
 
 const divStyle = {
   justifyContent: 'center',
@@ -26,7 +26,6 @@ class Topbar extends Component {
 
   render() {
     const {agency} = this.state;
-    // const avatar = this.state.agency.logo || User;
 
     return (
       // {/* <!--  Topbar  --> */ }
@@ -39,7 +38,7 @@ class Topbar extends Component {
           <i className="fa fa-bars" />
         </button>
         <div className="input-group" style={divStyle}>
-          ITEC CMS
+          Valvatida App
         </div>
 
         {/* <!--  Topbar Search  --> */}
@@ -201,11 +200,11 @@ class Topbar extends Component {
               <span className="mr-2 d-none d-lg-inline text-gray-600 small">
                 {agency.title}
               </span>
-              {/* <img
+              <img
                 className="img-profile rounded-circle"
-                src={avatar}
+                src={User}
                 alt="Menu"
-              /> */}
+              />
             </div>
             {/* <!--  Dropdown - User Information  --> */}
             <div
