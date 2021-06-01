@@ -97,12 +97,12 @@ function AdminSignIn() {
                                   className="custom-control-label"
                                   htmlFor="customCheck">
                                   Remember Me
-                                  <input
-                                    type="checkbox"
-                                    className="custom-control-input"
-                                    id="customCheck"
-                                  />
                                 </label>
+                                <input
+                                  type="checkbox"
+                                  className="custom-control-input"
+                                  id="customCheck"
+                                />
                               </div>
                             </div>
                             <button

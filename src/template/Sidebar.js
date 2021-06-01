@@ -24,7 +24,72 @@ function Sidebar() {
       <hr className="sidebar-divider" />
 
       {/* <!--  Heading  --> */}
+      <div className="sidebar-heading">Administrativo</div>
+      {/* <!--  Nav Item - Pages Collapse Menu  --> */}
+      <li className="nav-item">
+        <div
+          className="nav-link collapsed"
+          href="#"
+          data-toggle="collapse"
+          data-target="#collapseAdmin"
+          aria-expanded="true"
+          aria-controls="collapseAdmin">
+          <i className="fas fa-fw fa-cog" />
+          <span>Administrador</span>
+        </div>
+        <div
+          id="collapseAdmin"
+          className="collapse"
+          aria-labelledby="headingTwo"
+          data-parent="#accordionSidebar">
+          <div className="bg-white py-2 collapse-inner rounded">
+            <h6 className="collapse-header">Opções:</h6>
+            <Link className="collapse-item" to="/admin">
+              Listar Administradores
+            </Link>
+            <Link className="collapse-item" to="/admin/register">
+              Cadastrar Administrador
+            </Link>
+          </div>
+        </div>
+      </li>
+
+      {/* <!--  Nav Item - Pages Collapse Menu  --> */}
+
+      {/* <!--  Divider  --> */}
+      <hr className="sidebar-divider" />
+
+      {/* <!--  Heading  --> */}
       <div className="sidebar-heading">Escola</div>
+
+      {/* <!--  Nav Item - Pages Collapse Menu  --> */}
+      <li className="nav-item">
+        <div
+          className="nav-link collapsed"
+          href="#"
+          data-toggle="collapse"
+          data-target="#collapseSchool"
+          aria-expanded="true"
+          aria-controls="collapseSchool">
+          <i className="fas fa-fw fa-cog" />
+          <span>Escola</span>
+        </div>
+        <div
+          id="collapseSchool"
+          className="collapse"
+          aria-labelledby="headingTwo"
+          data-parent="#accordionSidebar">
+          <div className="bg-white py-2 collapse-inner rounded">
+            <h6 className="collapse-header">Opções:</h6>
+            <Link className="collapse-item" to="/schools">
+              Listar Escolas
+            </Link>
+            <Link className="collapse-item" to="/schools/new">
+              Cadastrar Escola
+            </Link>
+          </div>
+        </div>
+      </li>
 
       {/* <!--  Nav Item - Pages Collapse Menu  --> */}
       <li className="nav-item">

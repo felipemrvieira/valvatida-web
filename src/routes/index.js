@@ -12,13 +12,22 @@ import AdminRegister from '../pages/Admin/Register';
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
 
+import Schools from '../pages/School';
+import SchoolsShow from '../pages/School/Show';
+import SchoolsEdit from '../pages/School/Edit';
+
 export default function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={Page} isPrivate />
       <Route path="/page" component={Page} isPrivate />
       <Route path="/admin/signin" component={AdminSignIn} />
-      <Route path="/admin/register" component={AdminRegister} />
+      <Route path="/admin/register" component={AdminRegister} isPrivate />
+      {/* <Route path="/schools/new" component={NewSchool} isPrivate /> */}
+      <Route path="/schools/" exact component={Schools} isPrivate />
+      <Route path="/schools/:id" exact component={SchoolsShow} isPrivate />
+      <Route path="/schools/edit/:id" exact component={SchoolsEdit} isPrivate />
+
       <Route path="/register" component={SignUp} />
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/profile" component={Profile} isPrivate />
