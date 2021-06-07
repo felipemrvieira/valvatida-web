@@ -132,9 +132,7 @@ function School() {
                               </div>
                               <Link
                                 className="dropdown-item"
-                                to={`/address/edit/${
-                                  school.address && school.address.id
-                                }`}>
+                                to={`/schools/edit/${school.id}`}>
                                 Editar
                               </Link>
                               <div className="dropdown-divider" />
