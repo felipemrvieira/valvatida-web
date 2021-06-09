@@ -12,6 +12,8 @@ import AdminRegister from '../pages/Admin/Register';
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
 
+import Teachers from '../pages/Teacher';
+
 import Schools from '../pages/School';
 import SchoolsShow from '../pages/School/Show';
 import SchoolsNew from '../pages/School/New';
@@ -31,6 +33,8 @@ export default function Routes() {
       <Route path="/schools/new" exact component={SchoolsNew} isPrivate />
       <Route path="/schools/:id" exact component={SchoolsShow} isPrivate />
       <Route path="/schools/edit/:id" exact component={SchoolsEdit} isPrivate />
+
+      <Route path="/teachers/" exact component={Teachers} isPrivate />
 
       <Route
         path="/address/edit/:id"

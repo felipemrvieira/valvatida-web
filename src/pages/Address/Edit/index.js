@@ -36,16 +36,6 @@ function SchoolsEdit() {
   const {id} = useParams();
   const history = useHistory();
 
-  async function loadAddress() {
-    try {
-      const response = await api.get(`/addresses/${id}`);
-      setAddress(response.data);
-      console.tron.log(response.data);
-    } catch (err) {
-      console.tron.log(err);
-    }
-  }
-
   async function loadCountries() {
     try {
       const response = await api.get(`/countries/`);
@@ -83,6 +73,35 @@ function SchoolsEdit() {
     }
   }
 
+  async function loadAddress() {
+    try {
+      const response = await api.get(`/addresses/${id}`);
+      setAddress(response.data);
+      console.tron.log(response.data);
+
+      const country = response.data.extra && response.data.extra.country;
+      setSelectedCountry({label: country.name, value: country.id});
+      loadStates(country.id);
+
+      const state = response.data.extra && response.data.extra.state;
+      setSelectedState({label: state.name, value: state.id});
+      loadCities(state.id);
+
+      const city = response.data.extra && response.data.extra.city;
+      setSelectedCity({label: city.name, value: city.id});
+      loadNeighborhoods(city.id);
+
+      const neighborhood =
+        response.data.extra && response.data.extra.neighborhood;
+      setSelectedNeighborhood({
+        label: neighborhood.name,
+        value: neighborhood.id,
+      });
+    } catch (err) {
+      console.tron.log(err);
+    }
+  }
+
   async function createCountry(data) {
     try {
       const response = await api.post(`/countries/`, data);
@@ -110,10 +129,9 @@ function SchoolsEdit() {
 
       history.goBack();
     } catch (err) {
-      const message = err.response.data.errors.full_messages[0];
-      console.tron.log(message);
+      console.tron.log(err);
 
-      toast.error(`Falha na edição: ${message}`);
+      toast.error(`Falha na edição: ${err}`);
     }
   }
 
@@ -306,8 +324,8 @@ function SchoolsEdit() {
                               onChange={handleStateChange}
                               onInputChange={handleStateInputChange}
                               options={newStates}
-                              value={selectedState}
                               placeholder="Selecione"
+                              value={selectedState}
                             />
                           </div>
                           <div className="form-group">

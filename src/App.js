@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
 import './config/ReactotronConfig';
@@ -12,13 +12,15 @@ import GlobalStyle from './styles/global';
 
 function App() {
   return (
-    <Provider store={store}>
-      <BrowserRouter history={history}>
-        <GlobalStyle />
-        <ToastContainer />
-        <Routes />
-      </BrowserRouter>
-    </Provider>
+    <Suspense fallback={<h1>Loading...</h1>}>
+      <Provider store={store}>
+        <BrowserRouter history={history}>
+          <GlobalStyle />
+          <ToastContainer />
+          <Routes />
+        </BrowserRouter>
+      </Provider>
+    </Suspense>
   );
 }
 
