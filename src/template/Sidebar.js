@@ -113,7 +113,7 @@ function Sidebar() {
             <Link className="collapse-item" to="/teachers">
               Listar Professores
             </Link>
-            <Link className="collapse-item" to="/teachers/new">
+            <Link className="collapse-item" to="/teachers /new">
               Cadastrar Professor
             </Link>
           </div>
@@ -184,7 +184,7 @@ function Sidebar() {
           aria-expanded="true"
           aria-controls="collapseGallery">
           <i className="fas fa-fw fa-cog" />
-          <span>Bancos de Imagens</span>
+          <span>Cursos</span>
         </div>
         <div
           id="collapseGallery"
@@ -193,11 +193,11 @@ function Sidebar() {
           data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
             <h6 className="collapse-header">Opções:</h6>
-            <Link className="collapse-item" to="/galleries">
-              Listar Bancos
+            <Link className="collapse-item" to="/courses">
+              Listar Cursos
             </Link>
-            <Link className="collapse-item" to="/galleries/new">
-              Cadastrar Banco
+            <Link className="collapse-item" to="/courses/new">
+              Cadastrar Curso
             </Link>
           </div>
         </div>
