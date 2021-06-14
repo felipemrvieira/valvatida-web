@@ -110,10 +110,10 @@ function Sidebar() {
           data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
             <h6 className="collapse-header">Opções:</h6>
-            <Link className="collapse-item" to="/news">
+            <Link className="collapse-item" to="/teachers">
               Listar Professores
             </Link>
-            <Link className="collapse-item" to="/news/new">
+            <Link className="collapse-item" to="/teachers/new">
               Cadastrar Professor
             </Link>
           </div>

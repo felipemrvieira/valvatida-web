@@ -60,7 +60,7 @@ function Teacher() {
           <div>
             <Link
               className="btn btn-light btn-icon-split"
-              to={`/schools/${row.value}`}>
+              to={`/teachers/${row.value}`}>
               <span className="icon text-gray-600">
                 <i className="fas fa-arrow-right" />
               </span>

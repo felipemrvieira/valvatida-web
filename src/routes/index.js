@@ -13,6 +13,9 @@ import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
 
 import Teachers from '../pages/Teacher';
+import TeachersNew from '../pages/Teacher/New';
+import TeachersShow from '../pages/Teacher/Show';
+import TeachersEdit from '../pages/Teacher/Edit';
 
 import Schools from '../pages/School';
 import SchoolsShow from '../pages/School/Show';
@@ -35,6 +38,14 @@ export default function Routes() {
       <Route path="/schools/edit/:id" exact component={SchoolsEdit} isPrivate />
 
       <Route path="/teachers/" exact component={Teachers} isPrivate />
+      <Route path="/teachers/new" exact component={TeachersNew} isPrivate />
+      <Route path="/teachers/:id" exact component={TeachersShow} isPrivate />
+      <Route
+        path="/teachers/edit/:id"
+        exact
+        component={TeachersEdit}
+        isPrivate
+      />
 
       <Route
         path="/address/edit/:id"

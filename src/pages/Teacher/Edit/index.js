@@ -13,18 +13,22 @@ import LogoutModal from '../../../template/LogoutModal';
 import api from '../../../services/api';
 
 const schema = Yup.object().shape({
-  name: Yup.string().required('Insira o nome da escola'),
+  name: Yup.string().required('Insira o nome do usuário'),
+  email: Yup.string()
+    .email('Insira um email válido')
+    .required('O email é obrigatório'),
 });
 
-function SchoolsEdit() {
-  const [school, setSchool] = useState({});
+function TeachersNew() {
+  const [teacher, setTeacher] = useState([]);
+
   const {id} = useParams();
   const history = useHistory();
 
-  async function loadSchool() {
+  async function loadTeacher() {
     try {
-      const response = await api.get(`/schools/${id}`);
-      setSchool(response.data);
+      const response = await api.get(`/teachers/${id}`);
+      setTeacher(response.data);
       console.tron.log(response.data);
     } catch (err) {
       console.tron.log(err);
@@ -32,27 +36,29 @@ function SchoolsEdit() {
   }
 
   useEffect(() => {
-    loadSchool();
+    loadTeacher();
   }, []);
 
   async function handleSubmit(data) {
     console.tron.log(data);
     try {
-      const response = await api.patch(`/schools/${id}`, data);
+      const response = await api.patch(`/teachers/${id}`, {
+        ...data,
+        school_id: 1,
+      });
 
-      toast.success('Edição realizada com sucesso!');
+      toast.success('Professor editado com sucesso!');
+      history.push('/teachers');
+
       console.tron.log(response);
-
-      history.push('/schools');
     } catch (err) {
-      const message = err.response.data.errors.full_messages[0];
-      console.tron.log(message);
+      console.tron.log(err);
 
-      toast.error(`Falha na edição: ${message}`);
+      toast.error(`Falha na edição: ${err}`);
     }
   }
 
-  const initialData = school;
+  const initialData = teacher;
 
   return (
     <div className="App">
@@ -68,37 +74,18 @@ function SchoolsEdit() {
               {/* <!--  Begin Page Content  --> */}
               <div className="container-fluid">
                 {/* <!--  Page Heading  --> */}
-                <h1 className="h3 mb-4 text-gray-800">Escola {id}</h1>
+                <h1 className="h3 mb-4 text-gray-800">Editar Professor</h1>
 
                 <div className="">
                   <div className="row">
                     <div className="col-md-12">
                       {/* <!-- Card Body --> */}
                       <div className="card shadow mb-4">
-                        {/* <!-- Card Header - Dropdown --> */}
-                        {/* <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 className="m-0 font-weight-bold text-primary">Informações di Item de SIC</h6>
-                            <div className="dropdown no-arrow">
-                                <div className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </div>
-                                <div id="dropdown-photo-new" className="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                    aria-labelledby="dropdownMenuLink" x-placement="bottom-end">
-                                    <div className="dropdown-header">Dropdown Header:</div>
-                                    <div className="dropdown-item" href="#">Action</div>
-                                    <div className="dropdown-item" href="#">Another action</div>
-                                    <div className="dropdown-divider"></div>
-                                    <div className="dropdown-item" href="#">Something else here</div>
-                                </div>
-                            </div>
-                        </div> */}
-
-                        {/* <!-- Card Body --> */}
                         <div className="card-body">
                           <Form
                             schema={schema}
-                            onSubmit={handleSubmit}
-                            initialData={initialData}>
+                            initialData={initialData}
+                            onSubmit={handleSubmit}>
                             <div className="form-group">
                               <label htmlFor="name">Nome</label>
                               <Input
@@ -108,11 +95,40 @@ function SchoolsEdit() {
                                 placeholder="Seu Nome"
                               />
                             </div>
-
+                            <div className="form-group">
+                              <label htmlFor="email">Email</label>
+                              <Input
+                                className="form-control"
+                                id="email"
+                                name="email"
+                                type="email"
+                                placeholder="Seu email"
+                              />
+                            </div>
+                            <div className="form-group">
+                              <label htmlFor="titulo">Senha</label>
+                              <Input
+                                className="form-control"
+                                name="password"
+                                type="password"
+                                placeholder="Senha"
+                              />
+                            </div>
+                            <div className="form-group">
+                              <label htmlFor="titulo">
+                                Confirmação de Senha
+                              </label>
+                              <Input
+                                className="form-control"
+                                name="password_confirmation"
+                                type="password"
+                                placeholder="Confirme a senha"
+                              />
+                            </div>
                             <button
                               type="submit"
                               className="btn btn-success btn-block">
-                              Editar Escola
+                              Editar Professor
                             </button>
                           </Form>
                         </div>
@@ -144,4 +160,4 @@ function SchoolsEdit() {
   );
 }
 
-export default SchoolsEdit;
+export default TeachersNew;

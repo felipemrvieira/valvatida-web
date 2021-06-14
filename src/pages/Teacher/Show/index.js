@@ -9,14 +9,14 @@ import Footer from '../../../template/Footer';
 import LogoutModal from '../../../template/LogoutModal';
 import api from '../../../services/api';
 
-function School() {
-  const [school, setSchool] = useState({});
+function Teacher() {
+  const [teacher, setTeacher] = useState({});
   const {id} = useParams();
 
-  async function loadSchool() {
+  async function loadTeacher() {
     try {
-      const response = await api.get(`/schools/${id}`);
-      setSchool(response.data);
+      const response = await api.get(`/teachers/${id}`);
+      setTeacher(response.data);
       console.tron.log(response.data);
     } catch (err) {
       console.tron.log(err);
@@ -24,7 +24,7 @@ function School() {
   }
 
   useEffect(() => {
-    loadSchool();
+    loadTeacher();
   }, []);
 
   return (
@@ -41,7 +41,7 @@ function School() {
               {/* <!--  Begin Page Content  --> */}
               <div className="container-fluid">
                 {/* <!--  Page Heading  --> */}
-                <h1 className="h3 mb-4 text-gray-800">Escola {id}</h1>
+                <h1 className="h3 mb-4 text-gray-800">Professor {id}</h1>
 
                 <div className="">
                   <div className="row">
@@ -51,7 +51,7 @@ function School() {
                         {/* <!-- Card Header - Dropdown --> */}
                         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                           <h6 className="m-0 font-weight-bold text-primary">
-                            Informações da Escola
+                            Informações do Professor
                           </h6>
                           <div className="dropdown no-arrow">
                             <div
@@ -74,7 +74,7 @@ function School() {
                               </div>
                               <Link
                                 className="dropdown-item"
-                                to={`/schools/edit/${school.id}`}>
+                                to={`/teachers/edit/${teacher.id}`}>
                                 Editar
                               </Link>
                               <div className="dropdown-divider" />
@@ -92,15 +92,15 @@ function School() {
                         <div className="card-body">
                           <p>
                             <strong>ID: </strong>
-                            {school.id}
+                            {teacher.id}
                           </p>
                           <p>
                             <strong>Nome: </strong>
-                            {school.name}
+                            {teacher.name}
                           </p>
                           <p>
                             <strong>Data de Criação: </strong>
-                            {school.created_at}
+                            {teacher.created_at}
                           </p>
                         </div>
                       </div>
@@ -109,9 +109,9 @@ function School() {
                         {/* <!-- Card Header - Dropdown --> */}
                         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                           <h6 className="m-0 font-weight-bold text-primary">
-                            Endereço
+                            Escola
                           </h6>
-                          <div className="dropdown no-arrow">
+                          {/* <div className="dropdown no-arrow">
                             <div
                               className="dropdown-toggle"
                               href="#"
@@ -133,7 +133,7 @@ function School() {
                               <Link
                                 className="dropdown-item"
                                 to={`/address/edit/${
-                                  school.address && school.address.id
+                                  teacher.school && teacher.school.id
                                 }`}>
                                 Editar
                               </Link>
@@ -146,29 +146,17 @@ function School() {
                                 Excluir
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                         {/* <!-- Card Body --> */}
                         <div className="card-body">
                           <p>
                             <strong>ID: </strong>
-                            {school.address && school.address.id}
+                            {teacher.school && teacher.school.id}
                           </p>
                           <p>
                             <strong>Rua: </strong>
-                            {school.address && school.address.street}
-                          </p>
-                          <p>
-                            <strong>Número: </strong>
-                            {school.address && school.address.number}
-                          </p>
-                          <p>
-                            <strong>Latitude: </strong>
-                            {school.address && school.address.lat}
-                          </p>
-                          <p>
-                            <strong>Longitude: </strong>
-                            {school.address && school.address.long}
+                            {teacher.school && teacher.school.name}
                           </p>
                         </div>
                       </div>
@@ -199,4 +187,4 @@ function School() {
   );
 }
 
-export default School;
+export default Teacher;
