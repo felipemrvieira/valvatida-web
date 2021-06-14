@@ -6,6 +6,7 @@ import {Form, Input} from '@rocketseat/unform';
 
 import * as Yup from 'yup';
 import {toast} from 'react-toastify';
+import Select from 'react-select';
 import Sidebar from '../../../template/Sidebar';
 import Topbar from '../../../template/Topbar';
 import Footer from '../../../template/Footer';
@@ -21,6 +22,8 @@ const schema = Yup.object().shape({
 
 function TeachersNew() {
   const [teacher, setTeacher] = useState([]);
+  const [schools, setSchools] = useState([]);
+  const [selectedSchool, setSelectedSchool] = useState({});
 
   const {id} = useParams();
   const history = useHistory();
@@ -30,6 +33,20 @@ function TeachersNew() {
       const response = await api.get(`/teachers/${id}`);
       setTeacher(response.data);
       console.tron.log(response.data);
+      setSelectedSchool({
+        value: response.data.school.id,
+        label: response.data.school.name,
+      });
+    } catch (err) {
+      console.tron.log(err);
+    }
+  }
+
+  async function loadSchools() {
+    try {
+      const response = await api.get(`/schools/`);
+      setSchools(response.data);
+      console.tron.log(response.data);
     } catch (err) {
       console.tron.log(err);
     }
@@ -37,6 +54,7 @@ function TeachersNew() {
 
   useEffect(() => {
     loadTeacher();
+    loadSchools();
   }, []);
 
   async function handleSubmit(data) {
@@ -44,7 +62,7 @@ function TeachersNew() {
     try {
       const response = await api.patch(`/teachers/${id}`, {
         ...data,
-        school_id: 1,
+        school_id: selectedSchool.value,
       });
 
       toast.success('Professor editado com sucesso!');
@@ -58,7 +76,26 @@ function TeachersNew() {
     }
   }
 
+  const schoolOptions = schools.map((item) => ({
+    value: item.id,
+    label: item.name,
+  }));
+
   const initialData = teacher;
+
+  function handleSchoolChange(newValue, actionMeta) {
+    switch (actionMeta.action) {
+      case 'select-option':
+        console.tron.log(`Select option`);
+        console.tron.log(newValue);
+        setSelectedSchool(newValue);
+
+        break;
+
+      default:
+        break;
+    }
+  }
 
   return (
     <div className="App">
@@ -86,6 +123,15 @@ function TeachersNew() {
                             schema={schema}
                             initialData={initialData}
                             onSubmit={handleSubmit}>
+                            <div className="form-group">
+                              <label htmlFor="name">Nome</label>
+                              <Select
+                                name="school_id"
+                                options={schoolOptions}
+                                onChange={handleSchoolChange}
+                                value={selectedSchool}
+                              />
+                            </div>
                             <div className="form-group">
                               <label htmlFor="name">Nome</label>
                               <Input

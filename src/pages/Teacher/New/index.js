@@ -6,6 +6,7 @@ import {Form, Input} from '@rocketseat/unform';
 
 import * as Yup from 'yup';
 import {toast} from 'react-toastify';
+import Select from 'react-select';
 import Sidebar from '../../../template/Sidebar';
 import Topbar from '../../../template/Topbar';
 import Footer from '../../../template/Footer';
@@ -26,7 +27,8 @@ const schema = Yup.object().shape({
 });
 
 function TeachersNew() {
-  const [, setSchools] = useState([]);
+  const [schools, setSchools] = useState([]);
+  const [selectedSchool, setSelectedSchool] = useState({});
 
   const history = useHistory();
 
@@ -49,7 +51,7 @@ function TeachersNew() {
     try {
       const response = await api.post(`/teacher_auth`, {
         ...data,
-        school_id: 1,
+        school_id: selectedSchool.value,
       });
 
       toast.success('Professor cadastrado com sucesso!');
@@ -62,6 +64,26 @@ function TeachersNew() {
       toast.error(`Falha na edição: ${err}`);
     }
   }
+
+  const schoolOptions = schools.map((item) => ({
+    value: item.id,
+    label: item.name,
+  }));
+
+  function handleSchoolChange(newValue, actionMeta) {
+    switch (actionMeta.action) {
+      case 'select-option':
+        console.tron.log(`Select option`);
+        console.tron.log(newValue);
+        setSelectedSchool(newValue);
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
   return (
     <div className="App">
       <div id="page-top">
@@ -87,6 +109,15 @@ function TeachersNew() {
                       <div className="card shadow mb-4">
                         <div className="card-body">
                           <Form schema={schema} onSubmit={handleSubmit}>
+                            <div className="form-group">
+                              <label htmlFor="name">Nome</label>
+                              <Select
+                                name="school_id"
+                                options={schoolOptions}
+                                onChange={handleSchoolChange}
+                              />
+                            </div>
+
                             <div className="form-group">
                               <label htmlFor="name">Nome</label>
                               <Input
