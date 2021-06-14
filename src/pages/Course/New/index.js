@@ -7,6 +7,8 @@ import {Form, Input} from '@rocketseat/unform';
 import * as Yup from 'yup';
 import {toast} from 'react-toastify';
 import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
+
 import Sidebar from '../../../template/Sidebar';
 import Topbar from '../../../template/Topbar';
 import Footer from '../../../template/Footer';
@@ -19,7 +21,9 @@ const schema = Yup.object().shape({
 
 function CoursesNew() {
   const [schools, setSchools] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState({});
+  const [selectedGroup, setSelectedGroup] = useState({});
 
   const history = useHistory();
 
@@ -33,8 +37,19 @@ function CoursesNew() {
     }
   }
 
+  async function loadGroups() {
+    try {
+      const response = await api.get(`/course_groups/`);
+      setGroups(response.data);
+      console.tron.log(response.data);
+    } catch (err) {
+      console.tron.log(err);
+    }
+  }
+
   useEffect(() => {
     loadSchools();
+    loadGroups();
   }, []);
 
   async function handleSubmit(data) {
@@ -43,6 +58,7 @@ function CoursesNew() {
       const response = await api.post(`/courses`, {
         ...data,
         school_id: selectedSchool.value,
+        course_group_id: selectedGroup.value,
       });
 
       toast.success('Curso cadastrado com sucesso!');
@@ -75,6 +91,44 @@ function CoursesNew() {
     }
   }
 
+  const groupOptions = groups.map((item) => ({
+    value: item.id,
+    label: item.title,
+  }));
+
+  async function createGroup(data) {
+    try {
+      const response = await api.post(`/course_groups/`, data);
+      console.tron.log(response.data);
+      setSelectedGroup({
+        value: response.data.id,
+        label: response.data.title,
+      });
+    } catch (err) {
+      console.tron.log(err);
+    }
+  }
+
+  function handleGroupChange(newValue, actionMeta) {
+    console.tron.log(`Value Changed - action: ${actionMeta.action}`);
+    console.tron.log(newValue);
+
+    switch (actionMeta.action) {
+      case 'select-option':
+        console.tron.log(`Select option`);
+        setSelectedGroup(newValue);
+        break;
+
+      case 'create-option':
+        console.tron.log(`Create option`);
+        createGroup({title: newValue.label});
+        break;
+
+      default:
+        break;
+    }
+  }
+
   return (
     <div className="App">
       <div id="page-top">
@@ -89,9 +143,7 @@ function CoursesNew() {
               {/* <!--  Begin Page Content  --> */}
               <div className="container-fluid">
                 {/* <!--  Page Heading  --> */}
-                <h1 className="h3 mb-4 text-gray-800">
-                  Cadastrar Novo Professor
-                </h1>
+                <h1 className="h3 mb-4 text-gray-800">Novo Curso</h1>
 
                 <div className="">
                   <div className="row">
@@ -101,7 +153,7 @@ function CoursesNew() {
                         <div className="card-body">
                           <Form schema={schema} onSubmit={handleSubmit}>
                             <div className="form-group">
-                              <label htmlFor="name">Nome</label>
+                              <label htmlFor="name">Escola</label>
                               <Select
                                 name="school_id"
                                 options={schoolOptions}
@@ -116,6 +168,18 @@ function CoursesNew() {
                                 id="title"
                                 name="title"
                                 placeholder="Nome do curso"
+                              />
+                            </div>
+
+                            <div className="form-group">
+                              <label htmlFor="name">Grupo</label>
+                              <CreatableSelect
+                                label="Selecione"
+                                isClearable
+                                onChange={handleGroupChange}
+                                // onInputChange={handleCountryInputChange}
+                                options={groupOptions}
+                                placeholder="Selecione"
                               />
                             </div>
 
