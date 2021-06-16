@@ -139,13 +139,13 @@ function Sidebar() {
           data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
             <h6 className="collapse-header">Opções:</h6>
-            <Link className="collapse-item" to="/photos">
+            <Link className="collapse-item" to="/students">
               Listar Alunos
             </Link>
-            <Link className="collapse-item" to="/photos/new">
+            <Link className="collapse-item" to="/students/new">
               Cadastrar Aluno
             </Link>
-            <Link className="collapse-item" to="/photos/new">
+            <Link className="collapse-item" to="/students/new">
               Matricular Aluno
             </Link>
           </div>

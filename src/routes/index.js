@@ -30,6 +30,11 @@ import SchoolsShow from '../pages/School/Show';
 import SchoolsNew from '../pages/School/New';
 import SchoolsEdit from '../pages/School/Edit';
 
+import Students from '../pages/Student';
+import StudentsShow from '../pages/Student/Show';
+import StudentsNew from '../pages/Student/New';
+import StudentsEdit from '../pages/Student/Edit';
+
 import AddressesEdit from '../pages/Address/Edit';
 
 export default function Routes() {
@@ -44,6 +49,16 @@ export default function Routes() {
       <Route path="/schools/new" exact component={SchoolsNew} isPrivate />
       <Route path="/schools/:id" exact component={SchoolsShow} isPrivate />
       <Route path="/schools/edit/:id" exact component={SchoolsEdit} isPrivate />
+
+      <Route path="/students/" exact component={Students} isPrivate />
+      <Route path="/students/new" exact component={StudentsNew} isPrivate />
+      <Route path="/students/:id" exact component={StudentsShow} isPrivate />
+      <Route
+        path="/students/edit/:id"
+        exact
+        component={StudentsEdit}
+        isPrivate
+      />
 
       <Route path="/courses/" exact component={Courses} isPrivate />
       <Route path="/courses/new" exact component={CoursesNew} isPrivate />
