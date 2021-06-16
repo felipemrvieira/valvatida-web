@@ -113,7 +113,7 @@ function Sidebar() {
             <Link className="collapse-item" to="/teachers">
               Listar Professores
             </Link>
-            <Link className="collapse-item" to="/teachers /new">
+            <Link className="collapse-item" to="/teachers/new">
               Cadastrar Professor
             </Link>
           </div>
@@ -145,7 +145,7 @@ function Sidebar() {
             <Link className="collapse-item" to="/students/new">
               Cadastrar Aluno
             </Link>
-            <Link className="collapse-item" to="/students/new">
+            <Link className="collapse-item" to="/enrollments/new">
               Matricular Aluno
             </Link>
           </div>

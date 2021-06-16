@@ -35,6 +35,11 @@ import StudentsShow from '../pages/Student/Show';
 import StudentsNew from '../pages/Student/New';
 import StudentsEdit from '../pages/Student/Edit';
 
+import Enrollments from '../pages/Enrollment';
+import EnrollmentsShow from '../pages/Enrollment/Show';
+import EnrollmentsNew from '../pages/Enrollment/New';
+import EnrollmentsEdit from '../pages/Enrollment/Edit';
+
 import AddressesEdit from '../pages/Address/Edit';
 
 export default function Routes() {
@@ -57,6 +62,26 @@ export default function Routes() {
         path="/students/edit/:id"
         exact
         component={StudentsEdit}
+        isPrivate
+      />
+
+      <Route path="/enrollments/" exact component={Enrollments} isPrivate />
+      <Route
+        path="/enrollments/new"
+        exact
+        component={EnrollmentsNew}
+        isPrivate
+      />
+      <Route
+        path="/enrollments/:id"
+        exact
+        component={EnrollmentsShow}
+        isPrivate
+      />
+      <Route
+        path="/enrollments/edit/:id"
+        exact
+        component={EnrollmentsEdit}
         isPrivate
       />
 

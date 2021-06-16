@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
 // import PropTypes from 'prop-types';
-import {useHistory} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 import {Form, Input} from '@rocketseat/unform';
 
 import * as Yup from 'yup';
@@ -18,19 +18,29 @@ const schema = Yup.object().shape({
   email: Yup.string()
     .email('Insira um email válido')
     .required('O email é obrigatório'),
-  password: Yup.string()
-    .min(6, 'sua senha precisa ter pelo menos 6 caracteres')
-    .required('A senha é obrigatória'),
-  password_confirmation: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Confirme sua senha'),
 });
 
 function TeachersNew() {
+  const [teacher, setTeacher] = useState([]);
   const [schools, setSchools] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState({});
 
+  const {id} = useParams();
   const history = useHistory();
+
+  async function loadTeacher() {
+    try {
+      const response = await api.get(`/teachers/${id}`);
+      setTeacher(response.data);
+      console.tron.log(response.data);
+      setSelectedSchool({
+        value: response.data.school.id,
+        label: response.data.school.name,
+      });
+    } catch (err) {
+      console.tron.log(err);
+    }
+  }
 
   async function loadSchools() {
     try {
@@ -43,18 +53,19 @@ function TeachersNew() {
   }
 
   useEffect(() => {
+    loadTeacher();
     loadSchools();
   }, []);
 
   async function handleSubmit(data) {
     console.tron.log(data);
     try {
-      const response = await api.post(`/teacher_auth`, {
+      const response = await api.patch(`/teachers/${id}`, {
         ...data,
         school_id: selectedSchool.value,
       });
 
-      toast.success('Professor cadastrado com sucesso!');
+      toast.success('Professor editado com sucesso!');
       history.push('/teachers');
 
       console.tron.log(response);
@@ -69,6 +80,8 @@ function TeachersNew() {
     value: item.id,
     label: item.name,
   }));
+
+  const initialData = teacher;
 
   function handleSchoolChange(newValue, actionMeta) {
     switch (actionMeta.action) {
@@ -98,9 +111,7 @@ function TeachersNew() {
               {/* <!--  Begin Page Content  --> */}
               <div className="container-fluid">
                 {/* <!--  Page Heading  --> */}
-                <h1 className="h3 mb-4 text-gray-800">
-                  Cadastrar Novo Professor
-                </h1>
+                <h1 className="h3 mb-4 text-gray-800">Editar Professor</h1>
 
                 <div className="">
                   <div className="row">
@@ -108,16 +119,19 @@ function TeachersNew() {
                       {/* <!-- Card Body --> */}
                       <div className="card shadow mb-4">
                         <div className="card-body">
-                          <Form schema={schema} onSubmit={handleSubmit}>
+                          <Form
+                            schema={schema}
+                            initialData={initialData}
+                            onSubmit={handleSubmit}>
                             <div className="form-group">
-                              <label htmlFor="name">Escola</label>
+                              <label htmlFor="name">Nome</label>
                               <Select
                                 name="school_id"
                                 options={schoolOptions}
                                 onChange={handleSchoolChange}
+                                value={selectedSchool}
                               />
                             </div>
-
                             <div className="form-group">
                               <label htmlFor="name">Nome</label>
                               <Input
@@ -127,7 +141,6 @@ function TeachersNew() {
                                 placeholder="Seu Nome"
                               />
                             </div>
-
                             <div className="form-group">
                               <label htmlFor="email">Email</label>
                               <Input
@@ -147,7 +160,6 @@ function TeachersNew() {
                                 placeholder="Senha"
                               />
                             </div>
-
                             <div className="form-group">
                               <label htmlFor="titulo">
                                 Confirmação de Senha
@@ -159,11 +171,10 @@ function TeachersNew() {
                                 placeholder="Confirme a senha"
                               />
                             </div>
-
                             <button
                               type="submit"
                               className="btn btn-success btn-block">
-                              Cadastrar Professor
+                              Editar Professor
                             </button>
                           </Form>
                         </div>
