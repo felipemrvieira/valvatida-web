@@ -199,6 +199,9 @@ function Sidebar() {
             <Link className="collapse-item" to="/courses/new">
               Cadastrar Curso
             </Link>
+            <Link className="collapse-item" to="/groups">
+              Listar Grupos
+            </Link>
           </div>
         </div>
       </li>

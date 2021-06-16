@@ -22,6 +22,9 @@ import CoursesNew from '../pages/Course/New';
 import CoursesShow from '../pages/Course/Show';
 import CoursesEdit from '../pages/Course/Edit';
 
+import CoursesGroups from '../pages/CourseGroup';
+import CoursesGroupsShow from '../pages/CourseGroup/Show';
+
 import Schools from '../pages/School';
 import SchoolsShow from '../pages/School/Show';
 import SchoolsNew from '../pages/School/New';
@@ -46,6 +49,9 @@ export default function Routes() {
       <Route path="/courses/new" exact component={CoursesNew} isPrivate />
       <Route path="/courses/:id" exact component={CoursesShow} isPrivate />
       <Route path="/courses/edit/:id" exact component={CoursesEdit} isPrivate />
+
+      <Route path="/groups" exact component={CoursesGroups} isPrivate />
+      <Route path="/groups/:id" exact component={CoursesGroupsShow} isPrivate />
 
       <Route path="/teachers/" exact component={Teachers} isPrivate />
       <Route path="/teachers/new" exact component={TeachersNew} isPrivate />
