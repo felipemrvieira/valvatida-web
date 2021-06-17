@@ -40,6 +40,16 @@ import EnrollmentsShow from '../pages/Enrollment/Show';
 import EnrollmentsNew from '../pages/Enrollment/New';
 import EnrollmentsEdit from '../pages/Enrollment/Edit';
 
+import Subjects from '../pages/Subject';
+import SubjectsShow from '../pages/Subject/Show';
+import SubjectsNew from '../pages/Subject/New';
+import SubjectsEdit from '../pages/Subject/Edit';
+
+import Questions from '../pages/Question';
+import QuestionsShow from '../pages/Question/Show';
+import QuestionsNew from '../pages/Question/New';
+import QuestionsEdit from '../pages/Question/Edit';
+
 import AddressesEdit from '../pages/Address/Edit';
 
 export default function Routes() {
@@ -89,6 +99,26 @@ export default function Routes() {
       <Route path="/courses/new" exact component={CoursesNew} isPrivate />
       <Route path="/courses/:id" exact component={CoursesShow} isPrivate />
       <Route path="/courses/edit/:id" exact component={CoursesEdit} isPrivate />
+
+      <Route path="/subjects/" exact component={Subjects} isPrivate />
+      <Route path="/subjects/new" exact component={SubjectsNew} isPrivate />
+      <Route path="/subjects/:id" exact component={SubjectsShow} isPrivate />
+      <Route
+        path="/subjects/edit/:id"
+        exact
+        component={SubjectsEdit}
+        isPrivate
+      />
+
+      <Route path="/questions/" exact component={Questions} isPrivate />
+      <Route path="/questions/new" exact component={QuestionsNew} isPrivate />
+      <Route path="/questions/:id" exact component={QuestionsShow} isPrivate />
+      <Route
+        path="/questions/edit/:id"
+        exact
+        component={QuestionsEdit}
+        isPrivate
+      />
 
       <Route path="/groups" exact component={CoursesGroups} isPrivate />
       <Route path="/groups/:id" exact component={CoursesGroupsShow} isPrivate />

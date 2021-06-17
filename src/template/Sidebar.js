@@ -232,7 +232,7 @@ function Sidebar() {
           aria-expanded="true"
           aria-controls="collapseEditoria">
           <i className="fas fa-fw fa-tag" />
-          <span>Editorias</span>
+          <span>Assuntos</span>
         </div>
         <div
           id="collapseEditoria"
@@ -241,11 +241,40 @@ function Sidebar() {
           data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
             <h6 className="collapse-header">Opções:</h6>
-            <Link className="collapse-item" to="/categories">
-              Listar Editorias
+            <Link className="collapse-item" to="/subjects">
+              Listar Assuntos
             </Link>
-            <Link className="collapse-item" to="/categories/new">
-              Cadastrar Editoria
+            <Link className="collapse-item" to="/subjects/new">
+              Cadastrar Assunto
+            </Link>
+          </div>
+        </div>
+      </li>
+
+      {/* <!--  Nav Item - Pages Collapse Menu  --> */}
+      <li className="nav-item">
+        <div
+          className="nav-link collapsed"
+          href="#"
+          data-toggle="collapse"
+          data-target="#collapseQuestion"
+          aria-expanded="true"
+          aria-controls="collapseQuestion">
+          <i className="fas fa-fw fa-tag" />
+          <span>Questões</span>
+        </div>
+        <div
+          id="collapseQuestion"
+          className="collapse"
+          aria-labelledby="headingTwo"
+          data-parent="#accordionSidebar">
+          <div className="bg-white py-2 collapse-inner rounded">
+            <h6 className="collapse-header">Opções:</h6>
+            <Link className="collapse-item" to="/questions">
+              Listar Questões
+            </Link>
+            <Link className="collapse-item" to="/questions/new">
+              Cadastrar Questão
             </Link>
           </div>
         </div>
