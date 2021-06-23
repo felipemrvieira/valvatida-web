@@ -30,4 +30,11 @@ export default createGlobalStyle`
   ul{ list-style: none }
 
   button { cursor: pointer }
+  .check{
+    display: flex;
+    align-items: center;
+    label{
+      margin: 0 5px;
+    }
+  }
 `;

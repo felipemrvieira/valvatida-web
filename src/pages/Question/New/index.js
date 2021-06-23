@@ -21,6 +21,9 @@ const schema = Yup.object().shape({
 function QuestionsNew() {
   const [subjects, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  const [alternatives, setAlternatives] = useState([
+    {label: '', correct: false},
+  ]);
 
   const [selectedSubject, setSelectedSubject] = useState({});
   const [selectedTeacher, setSelectedTeacher] = useState({});
@@ -134,6 +137,31 @@ function QuestionsNew() {
     }
   }
 
+  function addMultipleOption(e) {
+    e.preventDefault();
+    setAlternatives([...alternatives, {label: '', correct: false}]);
+    console.tron.log(alternatives);
+  }
+
+  function removeMultipleOption(index) {
+    const list = [...alternatives];
+    list.splice(index, 1);
+    setAlternatives(list);
+  }
+
+  function handleInputChange(e, index) {
+    const {name, value, checked} = e.target;
+    const list = [...alternatives];
+    if (name === 'correct') {
+      console.tron.log(checked);
+      list[index][name] = checked;
+    } else {
+      console.tron.log(value);
+      list[index][name] = value;
+    }
+    setAlternatives(list);
+  }
+
   return (
     <div className="App">
       <div id="page-top">
@@ -205,16 +233,78 @@ function QuestionsNew() {
                               />
                             </div>
 
-                            <button
+                            {/* <button
                               type="submit"
                               className="btn btn-success btn-block">
                               Cadastrar questão
-                            </button>
+                            </button> */}
                           </Form>
                         </div>
                       </div>
                     </div>
                   </div>
+
+                  <h2 className="h4 mb-4 text-gray-800">
+                    Alternativas
+                    <button
+                      type="button"
+                      className="btn btn-circle btn-light"
+                      onClick={addMultipleOption}>
+                      <i className="fas fa-fw fa-plus" />
+                    </button>
+                  </h2>
+
+                  <div className="row">
+                    {alternatives.map((alternative, index) => (
+                      <div className="col-md-4" id={index}>
+                        {/* <!-- Card Body --> */}
+                        <div className="card shadow mb-4">
+                          <button
+                            type="button"
+                            className="btn btn-light btn-sm"
+                            onClick={() => removeMultipleOption(index)}>
+                            <i className="fas fa-fw fa-times" />
+                          </button>
+                          <div className="card-body">
+                            {/* <Form schema={schema} onSubmit={handleSubmit}> */}
+                            <div className="form-group">
+                              <label htmlFor="title">
+                                Label da alternativa
+                              </label>
+                              <input
+                                className="form-control"
+                                id="label"
+                                // name={`label-${index}`}
+                                name="label"
+                                placeholder="Label"
+                                value={alternative.label}
+                                onChange={(e) => handleInputChange(e, index)}
+                              />
+                            </div>
+                            <div className="form-group check">
+                              <input
+                                type="checkbox"
+                                id={`check-${index}`}
+                                // name={`check-${index}`}
+                                name="correct"
+                                onChange={(e) => handleInputChange(e, index)}
+                              />
+                              <label htmlFor={`check-${index}`}>
+                                Alternativa correta
+                              </label>
+                            </div>
+                            {/* </Form> */}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="btn btn-success btn-block mb-4">
+                    Cadastrar questão
+                  </button>
                 </div>
 
                 <div />
