@@ -21,9 +21,8 @@ const schema = Yup.object().shape({
 function QuestionsNew() {
   const [subjects, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
-  const [alternatives, setAlternatives] = useState([
-    {label: '', correct: false},
-  ]);
+  const [alternatives, setAlternatives] = useState([]);
+  const [openQuestionAnswers, setOpenQuestionAnswers] = useState([]);
 
   const [selectedSubject, setSelectedSubject] = useState({});
   const [selectedTeacher, setSelectedTeacher] = useState({});
@@ -64,9 +63,11 @@ function QuestionsNew() {
         subject_id: selectedSubject.value,
         teacher_id: selectedTeacher.value,
         kind: selectedKind.value,
+        multiple_question_options_attributes: alternatives,
+        open_question_answers_attributes: openQuestionAnswers,
       });
 
-      toast.success('Qustão criada com sucesso!');
+      toast.success('Questão criada com sucesso!');
       history.push('/questions');
 
       console.tron.log(response);
@@ -129,6 +130,8 @@ function QuestionsNew() {
         console.tron.log(`Select option`);
         console.tron.log(newValue);
         setSelectedKind(newValue);
+        setAlternatives([]);
+        setOpenQuestionAnswers([]);
 
         break;
 
@@ -143,13 +146,24 @@ function QuestionsNew() {
     console.tron.log(alternatives);
   }
 
+  function addOpenQuestionAnswers(e) {
+    e.preventDefault();
+    setOpenQuestionAnswers([...openQuestionAnswers, {answer: ''}]);
+    console.tron.log(openQuestionAnswers);
+  }
+
   function removeMultipleOption(index) {
     const list = [...alternatives];
     list.splice(index, 1);
     setAlternatives(list);
   }
+  function removeAnswer(index) {
+    const list = [...openQuestionAnswers];
+    list.splice(index, 1);
+    setOpenQuestionAnswers(list);
+  }
 
-  function handleInputChange(e, index) {
+  function handleOptionInputChange(e, index) {
     const {name, value, checked} = e.target;
     const list = [...alternatives];
     if (name === 'correct') {
@@ -160,6 +174,14 @@ function QuestionsNew() {
       list[index][name] = value;
     }
     setAlternatives(list);
+  }
+
+  function handleAnswerInputChange(e, index) {
+    const {name, value} = e.target;
+    console.tron.log(name);
+    const list = [...openQuestionAnswers];
+    list[index][name] = value;
+    setOpenQuestionAnswers(list);
   }
 
   return (
@@ -177,14 +199,13 @@ function QuestionsNew() {
               <div className="container-fluid">
                 {/* <!--  Page Heading  --> */}
                 <h1 className="h3 mb-4 text-gray-800">Nova Questão</h1>
-
-                <div className="">
-                  <div className="row">
-                    <div className="col-md-12">
-                      {/* <!-- Card Body --> */}
-                      <div className="card shadow mb-4">
-                        <div className="card-body">
-                          <Form schema={schema} onSubmit={handleSubmit}>
+                <Form schema={schema} onSubmit={handleSubmit}>
+                  <div className="">
+                    <div className="row">
+                      <div className="col-md-12">
+                        {/* <!-- Card Body --> */}
+                        <div className="card shadow mb-4">
+                          <div className="card-body">
                             <div className="form-group">
                               <label htmlFor="name">Assunto</label>
                               <Select
@@ -238,81 +259,133 @@ function QuestionsNew() {
                               className="btn btn-success btn-block">
                               Cadastrar questão
                             </button> */}
-                          </Form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <h2 className="h4 mb-4 text-gray-800">
-                    Alternativas
-                    <button
-                      type="button"
-                      className="btn btn-circle btn-light"
-                      onClick={addMultipleOption}>
-                      <i className="fas fa-fw fa-plus" />
-                    </button>
-                  </h2>
-
-                  <div className="row">
-                    {alternatives.map((alternative, index) => (
-                      <div className="col-md-4" id={index}>
-                        {/* <!-- Card Body --> */}
-                        <div className="card shadow mb-4">
-                          <button
-                            type="button"
-                            className="btn btn-light btn-sm"
-                            onClick={() => removeMultipleOption(index)}>
-                            <i className="fas fa-fw fa-times" />
-                          </button>
-                          <div className="card-body">
-                            {/* <Form schema={schema} onSubmit={handleSubmit}> */}
-                            <div className="form-group">
-                              <label htmlFor="title">
-                                Label da alternativa
-                              </label>
-                              <input
-                                className="form-control"
-                                id="label"
-                                // name={`label-${index}`}
-                                name="label"
-                                placeholder="Label"
-                                value={alternative.label}
-                                onChange={(e) => handleInputChange(e, index)}
-                              />
-                            </div>
-                            <div className="form-group check">
-                              <input
-                                type="checkbox"
-                                id={`check-${index}`}
-                                // name={`check-${index}`}
-                                name="correct"
-                                onChange={(e) => handleInputChange(e, index)}
-                              />
-                              <label htmlFor={`check-${index}`}>
-                                Alternativa correta
-                              </label>
-                            </div>
-                            {/* </Form> */}
                           </div>
                         </div>
                       </div>
-                    ))}
+                    </div>
+
+                    {/* Respostas da questão aberta */}
+                    <div className={selectedKind.value === 0 ? '' : 'd-none'}>
+                      <h2 className="h4 mb-4 text-gray-800">
+                        Respostas da questão aberta
+                        <button
+                          type="button"
+                          className="btn btn-circle btn-light"
+                          onClick={addOpenQuestionAnswers}>
+                          <i className="fas fa-fw fa-plus" />
+                        </button>
+                      </h2>
+                      <div className="row">
+                        {openQuestionAnswers.map((questionAnswer, index) => (
+                          <div className="col-md-12" id={index}>
+                            {/* <!-- Card Body --> */}
+                            <div className="card shadow mb-4">
+                              <button
+                                type="button"
+                                className="btn btn-light btn-sm"
+                                onClick={() => removeAnswer(index)}>
+                                <i className="fas fa-fw fa-times" />
+                              </button>
+                              <div className="card-body">
+                                <div className="form-group">
+                                  <label htmlFor="answer">
+                                    Opção de resposta
+                                  </label>
+                                  <input
+                                    className="form-control"
+                                    id="answer"
+                                    // name={`label-${index}`}
+                                    name="answer"
+                                    placeholder="Resposta"
+                                    value={questionAnswer.answer}
+                                    onChange={(e) =>
+                                      handleAnswerInputChange(e, index)
+                                    }
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    {/* Respostas da questão aberta */}
+                    <div className={selectedKind.value === 1 ? '' : 'd-none'}>
+                      {/* Alternativas da múltipla escolha */}
+                      <h2 className="h4 mb-4 text-gray-800">
+                        Alternativas da múltipla escolha
+                        <button
+                          type="button"
+                          className="btn btn-circle btn-light"
+                          onClick={addMultipleOption}>
+                          <i className="fas fa-fw fa-plus" />
+                        </button>
+                      </h2>
+                      <div className="row">
+                        {alternatives.map((alternative, index) => (
+                          <div className="col-md-4" id={index}>
+                            {/* <!-- Card Body --> */}
+                            <div className="card shadow mb-4">
+                              <button
+                                type="button"
+                                className="btn btn-light btn-sm"
+                                onClick={() => removeMultipleOption(index)}>
+                                <i className="fas fa-fw fa-times" />
+                              </button>
+                              <div className="card-body">
+                                {/* <Form schema={schema} onSubmit={handleSubmit}> */}
+                                <div className="form-group">
+                                  <label htmlFor="title">
+                                    Label da alternativa
+                                  </label>
+                                  <input
+                                    className="form-control"
+                                    id="label"
+                                    // name={`label-${index}`}
+                                    name="label"
+                                    placeholder="Label"
+                                    value={alternative.label}
+                                    onChange={(e) =>
+                                      handleOptionInputChange(e, index)
+                                    }
+                                  />
+                                </div>
+                                <div className="form-group check">
+                                  <input
+                                    type="checkbox"
+                                    id={`check-${index}`}
+                                    // name={`check-${index}`}
+                                    name="correct"
+                                    onChange={(e) =>
+                                      handleOptionInputChange(e, index)
+                                    }
+                                  />
+                                  <label htmlFor={`check-${index}`}>
+                                    Alternativa correta
+                                  </label>
+                                </div>
+                                {/* </Form> */}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {/* Alternativas da múltipla escolha */}
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="btn btn-success btn-block mb-4">
+                      Cadastrar questão
+                    </button>
                   </div>
 
-                  <button
-                    type="submit"
-                    className="btn btn-success btn-block mb-4">
-                    Cadastrar questão
-                  </button>
-                </div>
-
-                <div />
+                  <div />
+                </Form>
               </div>
               {/*  /.container-fluid  */}
             </div>
             {/* End of Main Content */}
-
             <Footer />
           </div>
           {/* <!--  End of Content Wrapper  --> */}
