@@ -310,8 +310,9 @@ function QuestionsNew() {
                       </div>
                     </div>
                     {/* Respostas da questão aberta */}
+
+                    {/* Alternativas da múltipla escolha */}
                     <div className={selectedKind.value === 1 ? '' : 'd-none'}>
-                      {/* Alternativas da múltipla escolha */}
                       <h2 className="h4 mb-4 text-gray-800">
                         Alternativas da múltipla escolha
                         <button
@@ -370,8 +371,8 @@ function QuestionsNew() {
                           </div>
                         ))}
                       </div>
-                      {/* Alternativas da múltipla escolha */}
                     </div>
+                    {/* Alternativas da múltipla escolha */}
 
                     <button
                       type="submit"

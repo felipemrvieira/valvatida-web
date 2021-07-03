@@ -38,7 +38,7 @@ class Topbar extends Component {
           <i className="fa fa-bars" />
         </button>
         <div className="input-group" style={divStyle}>
-          Valvatida App
+          Educa Azul
         </div>
 
         {/* <!--  Topbar Search  --> */}

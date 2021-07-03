@@ -55,7 +55,7 @@ import AddressesEdit from '../pages/Address/Edit';
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/" exact component={Page} isPrivate />
+      <Route path="/" exact component={Schools} isPrivate />
       <Route path="/page" component={Page} isPrivate />
       <Route path="/admin/signin" component={AdminSignIn} />
       <Route path="/admin/register" component={AdminRegister} isPrivate />
